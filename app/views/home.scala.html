@@ -1,0 +1,21 @@
+@(user: String)
+@import views.html.helper._
+
+<!DOCTYPE HTML>
+
+<head>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
+</head>
+
+<body>
+	<div id="header">
+		<p>Hello @user!</p>
+	</div>
+
+	@form(routes.BlogController.newBlog) {
+		<input id="title" name="title" type="text" />
+		<input id="content" name="content" type="text" />
+		<input id="submit" name="submit" value="Post" type="submit" />
+	}
+
+</body>

@@ -1,0 +1,118 @@
+body {
+	font-family: ubuntu;
+}
+
+a {
+	text-decoration: none;
+}
+
+#header {
+	height: 100px;
+	background-color: #cccccc;
+	width: auto;
+	/*margin: 0 auto;*/
+}
+
+.heading {
+	margin: 10px;
+	float: left;
+	display: inline-block;
+}
+
+.heading form {
+
+}
+
+#loginDiv {
+	float: right;
+	display: inline-block;
+	margin: 0 auto;
+	width: 200px;
+	border: 1px soild #CCCCCC;
+	border-radius: 10px;
+	background-color: white;
+}
+
+#registerDiv {
+	margin: 0 auto;
+	width: 200px;
+	height: 150px;
+	border: 1px soild #CCCCCC;
+	border-radius: 10px;	
+}
+
+#blogSection {
+	width: 900px;
+	border: 2px solid #eeeeee;
+	margin: 0 auto;
+	margin-top: 20px;
+	border-radius: 5px;
+}
+
+.blog {
+	width: 800px;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 2px solid #EEEEEE;
+	border-radius: 10px;
+}
+
+.blogHeading {
+	text-align: center;
+	display: block;
+	/*background-color: black;*/
+	font-size: 11pt;
+}
+
+.blogContent {
+	background-color: white;
+	margin: 10px;
+}
+
+#content {
+	width: 900px;
+	height: 400px;
+	margin: 0 auto;
+}
+
+#blogDiv {
+	width: 950px;
+	margin: 0 auto;
+}
+
+#date {
+	float: left;
+	display: inline-block;
+}
+
+#title {
+	text-align: center;
+	margin-left: 50px;
+	display: inline-block;
+}
+
+#comments {
+	width: 400px;
+}
+
+.comment {
+	border: 2px solid #B2B2B2;
+	border-radius: 5px;
+	margin: 5px;
+}
+
+.commenterName {
+	display: inline-block;
+	float: left;
+}
+
+.commentDate {
+	display: inline-block;
+	float: right;
+}
+
+.commentText {
+	display: block;
+	clear: both;
+}

@@ -1,0 +1,48 @@
+@(blogs: List[Blog])(pageNum: Int)
+@import views.html.helper._
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>	
+</head>
+
+<body>
+
+<div id="header">
+	<h2 class="heading">Saurabh Speaks</h2>
+	<div id="loginDiv">			
+		@form(routes.LoginController.login) {
+			<input id="name" type="text" name="username" />
+			<input id="pass" type="password" name="password" />
+			<input id="loginButton" type="submit" name="action" value="Login" />
+			<a href="/register">Register</a>
+		}
+
+	</div>
+
+</div>
+
+	<section id="blogSection">
+		@for(blog <- blogs) {
+			<div class="blog">
+				<a href="/blog/@blog.id" class="blogHeading">@blog.title</a>
+				<span class="blogContent">@blog.content</span>
+			</div>
+		}
+
+		@if(pageNum != 1) {
+			<a href="/Page/@pageNum-1">Previous</a>
+		}
+		
+		@if(pageNum < Blogs.pageCount) {
+			<a href="/Page/@pageNum+1">Next</a>
+		}
+		
+	
+	</section>
+
+</body>
+</html>

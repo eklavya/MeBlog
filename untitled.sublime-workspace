@@ -1,0 +1,691 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Comm",
+				"Comment"
+			],
+			[
+				"Com",
+				"Comment"
+			],
+			[
+				"blo",
+				"blogsPerPage"
+			],
+			[
+				"with",
+				"withSession"
+			],
+			[
+				"BL",
+				"Blogs"
+			],
+			[
+				"for",
+				"foreignKey"
+			],
+			[
+				"un",
+				"unapply"
+			],
+			[
+				"get",
+				"getOrElse"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"bind",
+				"bindFromRequest"
+			],
+			[
+				"User",
+				"Users"
+			],
+			[
+				"login",
+				"loginForm"
+			],
+			[
+				"acti",
+				"Action"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "conf/routes",
+			"settings":
+			{
+				"buffer_size": 732,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/LoginConroller.scala",
+			"settings":
+			{
+				"buffer_size": 1457,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "package controllers\n\nimport play.api._\nimport play.api.mvc._\nimport play.api.data._\nimport play.api.data.Forms._\nimport models._\nimport play.api.data.validation.Constraints._\n\nobject BlogController extends Controller {\n\n	val blogForm = Form (\n		tuple (\n			\"name\" -> nonEmptyText,\n			\"content\" -> nonEmptyText\n			)\n		)\n\n	def newBlog = Action { implicit request =>\n		blogForm.bindFromRequest.fold(\n			formWithErrors => BadRequest(\"Please submit a proper blog.\")\n			valid =>  {\n				val user = request.cookies.get(\"user\")\n				Users.getByName(user) match {\n					case Some(_) =>  {\n						val blogId = Blogs.forInsert returning Blogs.id insert(None, valid._1, _.id.get, valid._2)\n						Ok(views.blog.html(blogId, valid._1))\n					}\n					case None => BadRequest(\"This  blog does not exist in the database !!\")\n				}\n			)\n	}\n\n	def showBlog(id: Option[Int]) = Action { implicit request =>\n		id.map {\n			if (Blogs.exists(x))\n				Ok(views.blog.html(x))\n			else\n				BadRequest(\"This blog does not exists.\")\n		}.getOrElse(BadRequest(\"Malformed request.\"))\n	}\n\n	def showPage(num: Option[Int]) = Action {implicit request =>\n		num.map {\n			\n		}\n	}\n}",
+			"file": "app/controllers/BlogController.scala",
+			"file_size": 1061,
+			"file_write_time": 1368806050000000,
+			"settings":
+			{
+				"buffer_size": 1131,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/User.scala",
+			"settings":
+			{
+				"buffer_size": 1401,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "package models\n\nimport scala.slick.driver.H2Driver.simple._\nimport play.api.db.DB\nimport Database.threadLocalSession\nimport play.api.Play.current\nimport play.api.data._\nimport play.api.data.Forms._\n\ncase class Blog(id: Int, name: String, authorId: Int, title: String, content: String, createdOn: Date)\n\nobject Blogs extends Table[Blog] (\"BLOGS\") {\n	def id = column[Int](\"ID\", O.PrimaryKey, O.AutoInc)\n	def name = column[String](\"NAME\")\n	def authorId = foreignKey(\"USER_FK\", id, Users) (_.id)\n	def title = column[String](\"TITLE\")\n	def content = column[String](\"CONTENT\")\n	def createdOn = column[Date](\"CREATED_ON\")\n	def * = id ~ name ~ authorId ~ title ~ content ~ createdOn <> (Blog.apply)(Blog.unapply _)\n\n	lazy val db = Database.forDataSource(DB.getDataSource())\n\n	def getBlogsOfUser(userId: Int) : List[Blog] = {\n		db withSession {\n			(for (q <- Blogs if (q.authorId === userId)) yield(q)).list\n		}\n	}\n\n	def getPageCount = {\n		db withSession {\n			val blogsPerPage = 4;\n			Query(Blogs).length / blogsPerPage\n		}\n	}\n\n	def getBlogsInPage(pageNum: Int): List[]\n}\n",
+			"file": "app/models/Blog.scala",
+			"file_size": 1819,
+			"file_write_time": 1368827802000000,
+			"settings":
+			{
+				"buffer_size": 1062,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/Comment.scala",
+			"settings":
+			{
+				"buffer_size": 955,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/Global.scala",
+			"settings":
+			{
+				"buffer_size": 566,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/index.scala.html",
+			"settings":
+			{
+				"buffer_size": 92,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/main.scala.html",
+			"settings":
+			{
+				"buffer_size": 461,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/home.scala.html",
+			"settings":
+			{
+				"buffer_size": 70,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/login.scala.html",
+			"settings":
+			{
+				"buffer_size": 1282,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "project/Build.scala",
+			"settings":
+			{
+				"buffer_size": 479,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "conf/application.conf",
+			"settings":
+			{
+				"buffer_size": 1939,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"ens",
+				"Ensime: Startup"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"INS",
+				"Package Control: Install Package"
+			],
+			[
+				"IN",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/esauraw/.config/sublime-text-2/Packages/Ensime/Ensime.sublime-settings",
+		"/home/esauraw/.config/sublime-text-2/Packages/GoSublime/USAGE.md",
+		"/home/esauraw/.config/sublime-text-2/Packages/GoSublime/CHANGELOG.md",
+		"/home/esauraw/.config/sublime-text-2/Packages/GoSublime/GoSublime.sublime-settings",
+		"/home/esauraw/Desktop/FlashPageFlip_FreeVersion/Free Version/Default.html",
+		"/home/esauraw/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/esauraw/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
+		"/home/esauraw/test.java"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Application",
+			"_",
+			"Database",
+			"}\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "conf/routes",
+					"settings":
+					{
+						"buffer_size": 732,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								730,
+								730
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Play 2.0/Play-Routes.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/controllers/LoginConroller.scala",
+					"settings":
+					{
+						"buffer_size": 1457,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								201,
+								201
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/controllers/BlogController.scala",
+					"settings":
+					{
+						"buffer_size": 1131,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1122,
+								1122
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 304.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/models/User.scala",
+					"settings":
+					{
+						"buffer_size": 1401,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1205,
+								1205
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/models/Blog.scala",
+					"settings":
+					{
+						"buffer_size": 1062,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								145,
+								145
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/models/Comment.scala",
+					"settings":
+					{
+						"buffer_size": 955,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								198,
+								198
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/Global.scala",
+					"settings":
+					{
+						"buffer_size": 566,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								126,
+								126
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/views/index.scala.html",
+					"settings":
+					{
+						"buffer_size": 92,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Play 2.0/Play-Scala-Template.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/views/main.scala.html",
+					"settings":
+					{
+						"buffer_size": 461,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								83,
+								83
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Play 2.0/Play-Scala-Template.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "app/views/home.scala.html",
+					"settings":
+					{
+						"buffer_size": 70,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								61,
+								61
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Play 2.0/Play-Scala-Template.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "app/views/login.scala.html",
+					"settings":
+					{
+						"buffer_size": 1282,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1260,
+								1260
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Play 2.0/Play-Scala-Template.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "project/Build.scala",
+					"settings":
+					{
+						"buffer_size": 479,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								90,
+								90
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "conf/application.conf",
+					"settings":
+					{
+						"buffer_size": 1939,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								347,
+								347
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Play 2.0/configuration.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 35.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.GoSublime-source-output":
+	{
+		"height": 124.0
+	},
+	"output.MarGo-output":
+	{
+		"height": 124.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}

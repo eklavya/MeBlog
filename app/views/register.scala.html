@@ -1,0 +1,28 @@
+@import views.html.helper._
+
+<!DOCTYPE HTML>
+
+<html>
+	
+<head>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"></link>
+</head>
+
+<body>
+
+<div id="registerDiv">		
+	
+	@form(action = routes.LoginController.register, args = 'method -> "POST") {
+		<label for="name">Username</label>
+		<input id="name" type="text" name="name" />
+		<label for="email">Email</label>
+		<input id="email" type="email" name="email"/>
+		<label for="pass">Password</label>
+		<input id="pass" type="password" name="password" />
+		<input id="registerButton" type="submit" name="action" value="Register" />
+	}
+
+</div>
+
+</body>
+</html>

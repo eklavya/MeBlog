@@ -1,0 +1,48 @@
+@(blog: Blog)
+
+@import views.html.helper._
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
+</head>
+
+<body>
+	
+	<div id="blogDiv">
+		<p id="date">
+			@blog.createdOn
+		</p>
+		<p id="title">
+			@blog.title
+		</p>
+		<div id="content">
+			@blog.content
+		</div>
+	</div>
+
+	<div id="commentDiv">
+		@form(routes.BlogController.comment) {
+			<input name="comment" id="comment" type="text"/>
+			<input name="blogId" type="hidden" value="@blog.id"/>
+			<input name="submit" type="submit" value="Comment"/>
+		}
+
+	</div>
+
+	<div id="comments">
+
+		@for(comment <- Comments.commentsForBlog(blog.id.get)) {
+			<div class="comment">
+				<p class="commenterName">@Users.nameById(comment.userId)</p>
+				<p class="commentDate">@comment.dated</p>
+				<p class="commentText">@comment.content</p>
+			</div>
+		}
+
+	</div>
+
+</body>
