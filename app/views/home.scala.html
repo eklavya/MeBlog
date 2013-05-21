@@ -1,4 +1,5 @@
 @(user: String)
+
 @import views.html.helper._
 
 <!DOCTYPE HTML>
@@ -7,15 +8,15 @@
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
 </head>
 
-<body>
-	<div id="header">
-		<p>Hello @user!</p>
-	</div>
+<body>	
+	@loggedInHeader(user)
 
-	@form(routes.BlogController.newBlog) {
-		<input id="title" name="title" type="text" />
-		<input id="content" name="content" type="text" />
-		<input id="submit" name="submit" value="Post" type="submit" />
-	}
+	<div id="createBlogDiv">
+		@form(routes.BlogCtrl.newBlog) {
+			<input id="titleInput" name="title" type="text" placeholder="Title"/>
+			<textarea id="content" name="content"></textarea>
+			<input id="submit" name="submit" value="Post" type="submit" />
+		}
+	</div>
 
 </body>

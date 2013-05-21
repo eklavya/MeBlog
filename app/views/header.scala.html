@@ -1,0 +1,13 @@
+@import views.html.helper._
+
+<div id="header">
+	<a class="heading" href="/">Saurabh Speaks</a>
+	<div id="loginDiv">		
+			@form(routes.Application.login, 'id -> "loginForm") {
+				<input id="name" type="text" name="username" placeholder="Username"/>
+				<input id="pass" type="password" name="password" placeholder="Password"/>
+				<input id="loginButton" type="submit" name="action" value="Login" />
+			}
+			<a id="registerLink" href="/register"><button>Register</button></a>
+		</div>
+</div>

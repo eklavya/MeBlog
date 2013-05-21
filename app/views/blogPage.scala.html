@@ -1,4 +1,4 @@
-@(blogs: List[Blog])(pageNum: Int)
+@(blogs: List[Blog])(pageNum: Int)(user: Option[String])
 @import views.html.helper._
 
 <!DOCTYPE HTML>
@@ -11,25 +11,15 @@
 
 <body>
 
-<div id="header">
-	<h2 class="heading">Saurabh Speaks</h2>
-	<div id="loginDiv">			
-		@form(routes.LoginController.login) {
-			<input id="name" type="text" name="username" />
-			<input id="pass" type="password" name="password" />
-			<input id="loginButton" type="submit" name="action" value="Login" />
-			<a href="/register">Register</a>
-		}
-
-	</div>
-
-</div>
+	@user.map(loggedInHeader(_)).getOrElse(header())
 
 	<section id="blogSection">
 		@for(blog <- blogs) {
 			<div class="blog">
 				<a href="/blog/@blog.id" class="blogHeading">@blog.title</a>
-				<span class="blogContent">@blog.content</span>
+				<p class="author">Author: @Users.nameById(blog.authorId)</p>
+				<p class="postDate">Posted On: @blog.createdOn</p>
+				<span class="blogContent">@(new Html(new StringBuilder(blog.content)))</span>
 			</div>
 		}
 

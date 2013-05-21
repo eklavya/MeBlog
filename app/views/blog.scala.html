@@ -1,4 +1,4 @@
-@(blog: Blog)
+@(blog: Blog)(user: Option[String])
 
 @import views.html.helper._
 
@@ -12,21 +12,21 @@
 
 <body>
 	
+	@user.map(loggedInHeader(_)).getOrElse(header())
+
+	<div id="blogLayout">
 	<div id="blogDiv">
-		<p id="date">
-			@blog.createdOn
-		</p>
-		<p id="title">
-			@blog.title
-		</p>
+		<p class="blogHeading">@blog.title</p>
+		<p class="author">Author: @Users.nameById(blog.authorId)</p>
+		<p class="pstDate">Posted On: @blog.createdOn</p>
 		<div id="content">
-			@blog.content
+			@(new Html(new StringBuilder(blog.content)))
 		</div>
 	</div>
-
+	
 	<div id="commentDiv">
-		@form(routes.BlogController.comment) {
-			<input name="comment" id="comment" type="text"/>
+		@form(routes.BlogCtrl.comment) {
+			<textarea name="comment" id="commentInput"></textarea>
 			<input name="blogId" type="hidden" value="@blog.id"/>
 			<input name="submit" type="submit" value="Comment"/>
 		}
@@ -44,5 +44,6 @@
 		}
 
 	</div>
+</div>
 
 </body>

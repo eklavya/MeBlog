@@ -1,6 +1,6 @@
 package models
 
-import scala.slick.driver.H2Driver.simple._
+import scala.slick.driver.MySQLDriver.simple._
 import play.api.db.DB
 import Database.threadLocalSession
 import play.api.Play.current
@@ -49,14 +49,5 @@ object Users extends Table[User] ("USERS") {
 			Query(Users).filter(_.id === id).list.head.name
 		}
 	}
-
-	val userForm = Form (
-	mapping (
-		"id" -> ignored(Option(1)),
-		"name" -> nonEmptyText,
-		"email" -> nonEmptyText,
-		"password" -> nonEmptyText
-		) (User.apply)(User.unapply)				
-	)
 }
 

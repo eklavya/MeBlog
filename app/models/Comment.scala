@@ -1,6 +1,6 @@
 package models
 
-import scala.slick.driver.H2Driver.simple._
+import scala.slick.driver.MySQLDriver.simple._
 import play.api.db.DB
 import Database.threadLocalSession
 import play.api.Play.current
@@ -14,7 +14,7 @@ object Comments extends Table[Comment] ("COMMENTS") {
 	def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
 	def blogId = column[Int]("BLOG_FK")//, id, Blogs) (_.id)
 	def userId = column[Int]("USER_ID")//, id, Users) (_.id)
-	def content = column[String]("CONTENT")
+	def content = column[String]("CONTENT", O.DBType("varchar(512)"))
 	def dated = column[String]("DATED")
 	def * = id.? ~ blogId ~ userId ~ content ~ dated <> (Comment, Comment.unapply _)
 

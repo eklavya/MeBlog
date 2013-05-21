@@ -1,6 +1,6 @@
 package models
 
-import scala.slick.driver.H2Driver.simple._
+import scala.slick.driver.MySQLDriver.simple._
 import play.api.db.DB
 import Database.threadLocalSession
 import play.api.Play.current
@@ -14,7 +14,7 @@ object Blogs extends Table[Blog]("BLOGS") {
 	def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
 	def authorId = column[Int]("USER_FK")
 	def title = column[String]("TITLE")
-	def content = column[String]("CONTENT")
+	def content = column[String]("CONTENT", O.DBType("varchar(10000)"))
 	def createdOn = column[String]("CREATED_ON")
 	def * = id.? ~ authorId ~ title ~ content ~ createdOn <> (Blog, Blog.unapply _)
 	def autoInc = id.? ~ authorId ~ title ~ content ~ createdOn <> (Blog, Blog.unapply _) returning id
