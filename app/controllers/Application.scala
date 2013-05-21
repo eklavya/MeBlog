@@ -57,7 +57,7 @@ object Application extends Controller with Auth {
             }
             else {
               Users.create(user)
-              Ok(views.html.home(user.name)).withSession("user" -> user.name)
+              Redirect("/home").withSession("user" -> user.name)
             }
           }
         )
