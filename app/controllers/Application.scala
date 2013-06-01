@@ -2,20 +2,30 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import play.api.data.Forms._
 import play.api.data._
+import play.api.data.Forms._
 import models._
+import play.api.data.validation.Constraints._
+import java.util.Date
+import scala.slick.driver.MySQLDriver.simple._
+import play.api.db.DB
+import Database.threadLocalSession
+import play.api.Play.current
 
 object Application extends Controller with Auth {
+
+  lazy val db = Database.forDataSource(DB.getDataSource())
 
   val loginForm = Form (
     tuple (
       "username" -> nonEmptyText,
       "password" -> nonEmptyText
     ) verifying( "Authentication failed.", fields => fields match {
-        case(user, pass) => Users.auth(user, pass)
+        case(user, pass) => db withSession {
+          Users.auth(user, pass)
+        }
       })
-  ) 
+  )
 
   val userForm = Form (
   mapping (
@@ -24,11 +34,10 @@ object Application extends Controller with Auth {
   	"email" -> nonEmptyText,
   		"password" -> nonEmptyText,
   		"rePassword" -> nonEmptyText
-  	) ((id, name, email, password, _) => User(None, name, email, password))(user => Some(None, user.name, user.email, user.password, ""))				
+  	) ((id, name, email, password, _) => User(None, name, email, password))(user => Some(None, user.name, user.email, user.password, ""))
   )
 
-  def logout = Action { implicit request => 
-    //Ok(views.html.blogPage(Blogs.blogsInPage(1))(1)(username(request)))
+  def logout = Action { implicit request =>
     Redirect("/Page").withNewSession
   }
 
@@ -39,8 +48,7 @@ object Application extends Controller with Auth {
   def login = Action { implicit request =>
     loginForm.bindFromRequest.fold (
       formWithErrors => BadRequest( "Invalid credentials!" ),
-      valid => 
-          Ok(views.html.blogPage(Blogs.blogsInPage(1))(1)(Some(valid._1))).withSession("user" -> valid._1)
+      valid => Redirect("/Page").withSession("user" -> valid._1)
     )
   }
 
@@ -52,13 +60,15 @@ object Application extends Controller with Auth {
       userForm.bindFromRequest.fold(
         formWithErrors => BadRequest( "Invalid information." ),
         user => {
-            if (Users exists user.email) {
-              BadRequest("User already exists. Please login using your exisitng username.")
-            }
-            else {
-              Users.create(user)
-              Redirect("/home").withSession("user" -> user.name)
-            }
+              if (db withSession { Users exists user.email }) {
+                BadRequest("User already exists. Please login using your exisitng username.")
+              }
+              else {
+                db withSession {
+                  Users.create(user)
+                }
+                Redirect("/home").withSession("user" -> user.name)
+              }
           }
         )
     }

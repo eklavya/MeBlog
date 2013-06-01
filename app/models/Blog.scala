@@ -22,36 +22,36 @@ object Blogs extends Table[Blog]("BLOGS") {
 	lazy val db = Database.forDataSource(DB.getDataSource())
 
 	def create(blog: Blog) = {
-		db withSession {
+		// db withSession {
 			Blogs.autoInc.insert(blog)
-		}
+		// }
 	}
 
 	def blogsOfUser(userId: Int) : List[Blog] = {
-		db withSession {
+		// db withSession {
 			Query(Blogs).filter(_.authorId === userId).list
-		}
+		// }
 	}
 
 	val blogsPerPage = 4;
 
 	def pageCount: Int = {
-		db withSession {
+		// db withSession {
 			//Query(Blogs).length.map(_) 
 			(Blogs map { _.id.count}).first  / blogsPerPage
-		}
+		// }
 	}
 
 	def blogsInPage(pageNum: Int): List[Blog] = {
 		if (pageNum < 1 || (pageNum > pageCount)) {
-			db withSession {
+			// db withSession {
 				Query(Blogs).sortBy(_.createdOn.desc).take(blogsPerPage).list
-			}
+			// }
 		}
 		else {
-			db withSession {
+			// db withSession {
 				Query(Blogs).sortBy(_.createdOn.desc).drop((pageNum - 1)*blogsPerPage).take(blogsPerPage).list
-			}
+			// }
 		}
 	}
 

@@ -20,34 +20,23 @@ object Users extends Table[User] ("USERS") {
 	lazy val db = Database.forDataSource(DB.getDataSource())
 
 	def auth(user: String, pass: String) = {
-		db withSession {
-			(for (q <- Users if (q.name === user) && (q.password === pass)) yield true).list.headOption.getOrElse(false)
-		}
-		
+		(for (q <- Users if (q.name === user) && (q.password === pass)) yield true).list.headOption.getOrElse(false)
 	}
 
 	def create(user: User) {
-		db withSession {
-			Users.insert(User(None, user.name, user.email, user.password))
-		}
+		Users.insert(User(None, user.name, user.email, user.password))
 	}
 
 	def exists(email: String) : Boolean = {
-		db withSession {
-			(for (q <- Users if (q.email === email)) yield true).list.headOption.getOrElse(false)
-		}
+		(for (q <- Users if (q.email === email)) yield true).list.headOption.getOrElse(false)
 	}
 
 	def getByName(name: String): Option[User] = {
-		db withSession {
-			(for (q <- Users if (q.name === name)) yield(q)).list.headOption
-		}
+		(for (q <- Users if (q.name === name)) yield(q)).list.headOption
 	}
 
 	def nameById(id: Int): String = {
-		db withSession {
-			Query(Users).filter(_.id === id).list.head.name
-		}
+		Query(Users).filter(_.id === id).list.head.name
 	}
 }
 
