@@ -1,0 +1,230 @@
+body {
+  font-family: ubuntu;
+  font-size: 11pt;
+  background: #1C2F40;
+}
+
+a {
+  text-decoration: none;
+}
+
+#header {
+  height: auto;
+  width: 100%;
+  background: #445060;
+}
+
+.heading {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 40%;
+  color: #ffffff;
+  font-family: ubuntu, "ericsson_capitalregular", Arial, Helvetica, sans-serif;
+  font-size: 48pt;
+  text-decoration: none;
+}
+
+#loginDiv {
+  display: inline-block;
+  width: 220px;
+  border: 1px soild #393A3E;
+  border-radius: 10px;
+  background: none repeat scroll 0 0 rgba(68, 80, 96, 0.65);
+  padding: 10px;
+  color: white;
+}
+
+#loginForm {
+  width: 30%;
+  display: inline-block;
+}
+
+#loginButton {
+  display: inline-block;
+}
+
+.registerLink {
+  display: inline-block;
+}
+
+input[type=text], input[type=password], input[type=email] { 
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.85);
+  margin: 0 auto;
+    border: 1px solid rgba(78, 48, 67, 0.8);
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 0 1px 0 rgba(68, 80, 96, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1) inset;
+    color: #FFFFFF;
+    font-family: ubuntu,Arial,sans-serif;
+    font-size: 13px;
+    margin-bottom: 15px;
+    padding: 8px 4px 8px 10px;
+    transition: all 0.3s ease-out 0s;
+    width: 200px;
+    height: 30px;
+}
+
+#registerDiv {
+  margin: 0 auto;
+  margin-top: 10%;
+  width: 250px;
+  height: 280px;
+  border: 1px solid rgba(78, 48, 67, 0.8);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1) inset;
+  background: none repeat scroll 0 0 rgba(248, 248, 28, 0.65);
+  border-radius: 10px;  
+  padding: 20px;
+}
+
+#registerButton {
+  /*margin-top: 30px;*/
+  text-align: center;
+  display: block;
+}
+
+#blogSection {
+  width: 900px;
+  /*border: 2px solid #eeeeee;*/
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  /*border-radius: 5px;*/
+}
+
+.blog {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: white;
+  color: black;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1) inset;
+  border: 1px solid rgba(78, 48, 67, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.blogHeading {
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-size: 24pt;
+}
+
+.blogContent {
+  background-color: white;
+  margin: 10px;
+}
+
+#content {
+  width: 900px;
+  min-height: 400px;
+  margin: 0 auto;
+}
+
+#blogLayout {
+  width: 950px;
+  margin: 0 auto;
+}
+
+#blogDiv {
+  /*width: 950px;*/
+  margin: 0 auto;
+  margin-top: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); 
+  border-radius: 5px 5px 5px 5px; 
+  border: 1px solid #e1e1e1; 
+  /*margin: 0 50px 30px;*/
+  /*width: 200px;*/
+  padding: 15px;
+  background-color: white;
+  /*border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;*/
+  /*float: left;*/
+  clear: both;
+}
+
+#commentDiv {
+  margin-top: 30px;
+  width: 300px;
+}
+
+#commentInput {
+  width: 300px;
+  height: 100px;
+  clear: both;
+}
+
+#date {
+  float: left;
+  display: inline-block;
+}
+
+#title {
+  text-align: center;
+  margin-left: 50px;
+  display: inline-block;
+}
+
+#comments {
+  width: 400px;
+}
+
+.comment {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); 
+  border-radius: 5px 5px 5px 5px; 
+  border: 1px solid #e1e1e1; 
+  color: black;
+  background: #D9D1BA;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.commenterName {
+  display: inline-block;
+  float: left;
+}
+
+.commentDate {
+  display: inline-block;
+  float: right;
+}
+
+.commentText {
+  display: block;
+  clear: both;
+}
+
+#createBlogDiv {
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 900px;
+}
+
+#titleInput {
+  display: block;
+  float: left;
+}
+
+#greeting {
+  font-size: 16pt;
+  display: inline-block;
+  color: white;
+}
+
+#home {
+  margin-left: 10px;
+  font-size: 16pt;
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+}
+
+#logout {
+  margin-left: 10px;
+  font-size: 16pt;
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+}
