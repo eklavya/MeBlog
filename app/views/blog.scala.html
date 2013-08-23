@@ -8,45 +8,45 @@
 
 <head>
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<link rel="stylesheet" media="all" href=""/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 
 <body>
 	
-	@user.map(loggedInHeader(_)).getOrElse(header())
+	@layout(user) {
+	} {
+				<p class="blogHeading">@blog.title</p>
+				<p>By <span class="author">@Users.nameById(blog.authorId)</span> at <span class="postDate">@{
+					val d = blog.createdOn.split(' ')
+					d(0) + " " + d(1) + " " + d(2) + ", " + d(5)
+				}</p>
+				<div>
+					@(new Html(new StringBuilder(blog.content)))
+				</div>
+			
+			<div class="marginTop">
+				@form(routes.BlogCtrl.comment) {
+					<textarea name="comment" id="commentInput"></textarea>
+					<input name="blogId" type="hidden" value="@blog.id"/>
+					<input name="submit" type="submit" value="Comment"/>
+				}
 
-	<div id="blogLayout">
-	<div id="blogDiv">
-		<p class="blogHeading">@blog.title</p>
-		<p class="author">Author: @Users.nameById(blog.authorId)</p>
-		<p class="pstDate">Posted On: @blog.createdOn</p>
-		<div id="content">
-			@(new Html(new StringBuilder(blog.content)))
-		</div>
-	</div>
-	
-	<div id="commentDiv">
-		@form(routes.BlogCtrl.comment) {
-			<textarea name="comment" id="commentInput"></textarea>
-			<input name="blogId" type="hidden" value="@blog.id"/>
-			<input name="submit" type="submit" value="Comment"/>
-		}
+			</div>
 
-	</div>
+			<div id="comments" class="marginTop">
 
-	<div id="comments">
+				@for(comment <- Comments.commentsForBlog(blog.id.get)) {
+					<div class="comment">
+						<p class="commenterName">@Users.nameById(comment.userId)</p>
+						<p class="commentDate">@comment.dated</p>
+						<p class="commentText">@comment.content</p>
+					</div>
+				}
 
-		@for(comment <- Comments.commentsForBlog(blog.id.get)) {
-			<div class="comment">
-				<p class="commenterName">@Users.nameById(comment.userId)</p>
-				<p class="commentDate">@comment.dated</p>
-				<p class="commentText">@comment.content</p>
 			</div>
 		}
 
-	</div>
-</div>
+	
 
 </body>

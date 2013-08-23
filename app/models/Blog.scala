@@ -33,14 +33,9 @@ object Blogs extends Table[Blog]("BLOGS") {
 		// }
 	}
 
-	val blogsPerPage = 4;
+	val blogsPerPage = 4
 
-	def pageCount: Int = {
-		// db withSession {
-			//Query(Blogs).length.map(_) 
-			(Blogs map { _.id.count}).first  / blogsPerPage
-		// }
-	}
+	def pageCount: Int = Query(Blogs).list.length / blogsPerPage
 
 	def blogsInPage(pageNum: Int): List[Blog] = {
 		if (pageNum < 1 || (pageNum > pageCount)) {

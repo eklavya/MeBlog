@@ -42,7 +42,7 @@ object Application extends Controller with Auth {
   }
 
   def home = isAuthenticated { username => implicit request =>
-    Ok(views.html.home(username))
+    Ok(views.html.home(username)(db withSession {Blogs.blogsOfUser(Users.getByName(username).get.id.get)}))
   }
 
   def login = Action { implicit request =>

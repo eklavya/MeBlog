@@ -1,4 +1,4 @@
-@(user: String)
+@(user: String)(blogs: List[Blog])
 
 @import views.html.helper._
 
@@ -6,17 +6,55 @@
 
 <head>
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/skin.css">
+	<!-- Utility Dependencies -->
+	<script src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+	<script src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script> 
+	<!-- Needed for Menus, Buttons and Overlays used in the Toolbar -->
+	<script src="http://yui.yahooapis.com/2.9.0/build/container/container_core-min.js"></script>
+	<script src="http://yui.yahooapis.com/2.9.0/build/menu/menu-min.js"></script>
+	<script src="http://yui.yahooapis.com/2.9.0/build/button/button-min.js"></script>
+	<!-- Source file for Rich Text Editor-->
+	<script src="http://yui.yahooapis.com/2.9.0/build/editor/editor-min.js"></script>
 </head>
 
-<body>	
-	@loggedInHeader(user)
+<body class="yui-skin-sam">
+	@layout(Some(user)) {
+		<div id="blogLinks">
+			@for(i <- blogs) {
+				<p><a class="sideText" href="/blog/@i.id">@i.title</a></p>
+			}
 
-	<div id="createBlogDiv">
-		@form(routes.BlogCtrl.newBlog) {
-			<input id="titleInput" name="title" type="text" placeholder="Title"/>
-			<textarea id="content" name="content"></textarea>
-			<input id="submit" name="submit" value="Post" type="submit" />
-		}
-	</div>
+		</div>	
+	} {
+		<div id="createBlogDiv">
+			@form(routes.BlogCtrl.newBlog) {
+				<input class="marginBottom pure-input" id="titleInput" name="title" type="text" placeholder="Title"/>
+				<textarea name="mgspost" id="msgpost" cols="50" rows="10">
+							    <strong>Your</strong> HTML <em>code</em> goes here.<br>
+							</textarea>
+				<input id="blogContent" hidden="true" value=""/>
+				<input class="marginTop pure-button notice" id="submit" name="submit" value="Post" type="submit" />
+			}
+		</div>
+	
+	}
 
+	
+	<script type="text/javascript">
+	var myEditor = new YAHOO.widget.Editor('msgpost', {
+	    height: '300px',
+	    width: 'auto',
+	    dompath: true, //Turns on the bar at the bottom
+	    animate: true //Animates the opening, closing and moving of Editor windows
+	});
+	myEditor.render();
+	YAHOO.util.Event.on('submit', 'click', function() {
+    //Put the HTML back into the text area
+    myEditor.saveHTML();
+ 
+    //The var html will now have the contents of the textarea
+    var html = myEditor.get('element').value;
+	});
+	</script>
 </body>

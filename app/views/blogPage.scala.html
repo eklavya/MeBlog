@@ -11,28 +11,47 @@
 
 <body>
 
-	@user.map(loggedInHeader(_)).getOrElse(header())
-
-	<section id="blogSection">
-		@for(blog <- blogs) {
-			<div class="blog">
-				<a href="/blog/@blog.id" class="blogHeading">@blog.title</a>
-				<p class="author">Author: @Users.nameById(blog.authorId)</p>
-				<p class="postDate">Posted On: @blog.createdOn</p>
-				<span class="blogContent">@(new Html(new StringBuilder(blog.content)))</span>
+	@layout(user) {
+	<div class="pure-menu pure-menu-open" id="sideMenu">
+    <ul>
+        @for(blog <- blogs) {
+			<li>
+			<a class="sideText" href="#@blog.id">
+			<div class="blogBox">
+				<span>@blog.title<span>
+				<p>By <span class="author">@Users.nameById(blog.authorId)</span> at <span class="postDate">@{
+					val d = blog.createdOn.split(' ')
+					d(0) + " " + d(1) + " " + d(2) + ", " + d(5)
+				}</span></p>
 			</div>
+			</a>
+		</li>
 		}
+	</ul>
+	</div>
 
-		@if(pageNum != 1) {
-			<a href="/Page/@pageNum-1">Previous</a>
-		}
-		
-		@if(pageNum < Blogs.pageCount) {
-			<a href="/Page/@pageNum+1">Next</a>
-		}
-		
+	} {
+			@for(blog <- blogs) {
+				<div class="blog" id="@blog.id">
+					<a href="/blog/@blog.id" class="blogHeading">@blog.title</a>
+					<p>By <span class="author">@Users.nameById(blog.authorId)</span> at <span class="postDate">@{
+					val d = blog.createdOn.split(' ')
+					d(0) + " " + d(1) + " " + d(2) + ", " + d(5)
+				}</p>
+					<span class="blogContent">@(new Html(new StringBuilder(blog.content)))</span>
+				</div>
+			}
+
+			@if(pageNum != 1) {
+				<a href="/Page/@pageNum-1">Previous</a>
+			}
+			
+			@if(pageNum < Blogs.pageCount) {
+				<a href="/Page/@pageNum+1">Next</a>
+			}	
+	}
+
 	
-	</section>
 
 </body>
 </html>

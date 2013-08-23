@@ -1,60 +1,121 @@
 body {
-  font-family: ubuntu;
-  font-size: 11pt;
-  background: #1C2F40;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12pt;
+  color: #333;
 }
 
 a {
   text-decoration: none;
 }
 
-#header {
-  height: auto;
+/*#header {
+  height: 60px;
   width: 100%;
-  background: #445060;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: fixed;
+  background: rgb(30, 30, 40);
+  z-index: 999;
+}
+*/
+#sidebar {
+  background: #333;
+  height: 100%;
+  top: 0px;
+  bottom: 0;
+  width: 20%;
+  min-width: 280px;
+  position: fixed;
+  z-index: 1000;
+  overflow-y: auto;
 }
 
 .heading {
-  display: inline-block;
-  margin-left: 20px;
-  margin-right: 40%;
   color: #ffffff;
-  font-family: ubuntu, "ericsson_capitalregular", Arial, Helvetica, sans-serif;
-  font-size: 48pt;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2em;
   text-decoration: none;
+  margin: 30%;
 }
 
-#loginDiv {
+.blogBox {
+  /*display: inline-block;*/
+  width: 100%;
+  background: transparent;
+}
+
+#sideMenu {
+  background: transparent;
+  border: 0;
+}
+
+.sideText {
   display: inline-block;
-  width: 220px;
-  border: 1px soild #393A3E;
-  border-radius: 10px;
-  background: none repeat scroll 0 0 rgba(68, 80, 96, 0.65);
-  padding: 10px;
   color: white;
 }
 
-#loginForm {
-  width: 30%;
-  display: inline-block;
+#loginDiv {
+  padding: 10px;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+     -webkit-box-shadow: inset 0 0 10px #000000;
+     box-shadow:         inset 0 0 10px #000000;
 }
+
+#loggedinDiv {
+  display: inline-block;
+  width: auto;
+  padding: 10px;
+  float: right;
+}
+
+/*#loginForm {*/
+  /*width: auto;*/
+  /*display: inline-block;*/
+/*}*/
 
 #loginButton {
   display: inline-block;
+  margin: 15px;
 }
 
-.registerLink {
+#registerButton {
   display: inline-block;
 }
 
-input[type=text], input[type=password], input[type=email] { 
+#username {
+  display: block;
+  margin: 15px;
+}
+
+#password {
+  display: block;
+  margin: 15px;
+}
+
+#searchInput {
+ display: block;
+ margin: 15px; 
+}
+
+#searchButton {
+  display: block;
+  margin: 15px;
+}
+
+/*.registerLink {
+  display: inline-block;
+}
+*/
+/*input[type=text], input[type=password], input[type=email] { 
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0.85);
   margin: 0 auto;
     border: 1px solid rgba(78, 48, 67, 0.8);
     border-radius: 2px 2px 2px 2px;
     box-shadow: 0 1px 0 rgba(68, 80, 96, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1) inset;
     color: #FFFFFF;
-    font-family: ubuntu,Arial,sans-serif;
+    font-family: 'Open Sans';
     font-size: 13px;
     margin-bottom: 15px;
     padding: 8px 4px 8px 10px;
@@ -62,32 +123,30 @@ input[type=text], input[type=password], input[type=email] {
     width: 200px;
     height: 30px;
 }
-
+*/
 #registerDiv {
   margin: 0 auto;
   margin-top: 10%;
   width: 250px;
   height: 280px;
-  border: 1px solid rgba(78, 48, 67, 0.8);
+/*  border: 1px solid rgba(78, 48, 67, 0.8);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1) inset;
   background: none repeat scroll 0 0 rgba(248, 248, 28, 0.65);
   border-radius: 10px;  
-  padding: 20px;
+*/  padding: 20px;
 }
 
-#registerButton {
-  /*margin-top: 30px;*/
-  text-align: center;
-  display: block;
+.notice {
+  background-color: #61B842;
+  color: white;
 }
 
-#blogSection {
-  width: 900px;
-  /*border: 2px solid #eeeeee;*/
+#blogsDiv {
+  /*margin-left: 40%;*/
+  /*top: 80px;*/
+  /*position: relative;*/
+  width: 70%;
   margin: 0 auto;
-  margin-top: 20px;
-  padding: 20px;
-  /*border-radius: 5px;*/
 }
 
 .blog {
@@ -97,18 +156,20 @@ input[type=text], input[type=password], input[type=email] {
   margin-bottom: 10px;
   background: white;
   color: black;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1) inset;
-  border: 1px solid rgba(78, 48, 67, 0.8);
-  border-radius: 10px;
+  /*box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 1px rgba(0, 0, 0, 0.1) inset;*/
+  border-bottom: 1px solid #EEEEEE;
+  /*border-radius: 10px;*/
   padding: 20px;
 }
 
 .blogHeading {
-  text-align: center;
+  text-align: left;
   display: block;
   text-decoration: none;
   color: black;
   font-size: 24pt;
+  /*padding: 10px;*/
+  /*background: #EEEEEE;*/
 }
 
 .blogContent {
@@ -116,10 +177,17 @@ input[type=text], input[type=password], input[type=email] {
   margin: 10px;
 }
 
-#content {
-  width: 900px;
-  min-height: 400px;
-  margin: 0 auto;
+.author {
+  color: #1b98f8;
+}
+
+.postDate {
+  color: #999;
+}
+
+.content {
+  width: 70%;
+  margin-left:30%;
 }
 
 #blogLayout {
@@ -127,22 +195,22 @@ input[type=text], input[type=password], input[type=email] {
   margin: 0 auto;
 }
 
-#blogDiv {
+/*#blogDiv {
   /*width: 950px;*/
-  margin: 0 auto;
+  /*margin: 0 auto;
   margin-top: 30px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); 
   border-radius: 5px 5px 5px 5px; 
   border: 1px solid #e1e1e1; 
-  /*margin: 0 50px 30px;*/
+  margin: 0 50px 30px;*/
   /*width: 200px;*/
-  padding: 15px;
-  background-color: white;
+  /*padding: 15px;
+  background-color: white;*/
   /*border-top: 1px solid #e1e1e1;
   border-bottom: 1px solid #e1e1e1;*/
   /*float: left;*/
-  clear: both;
-}
+  /*clear: both;*/
+/*}*/
 
 #commentDiv {
   margin-top: 30px;
@@ -167,15 +235,11 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 #comments {
-  width: 400px;
+  width: 50%;
 }
 
 .comment {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); 
-  border-radius: 5px 5px 5px 5px; 
-  border: 1px solid #e1e1e1; 
   color: black;
-  background: #D9D1BA;
   padding: 10px;
   margin-bottom: 10px;
   margin-top: 20px;
@@ -204,27 +268,33 @@ input[type=text], input[type=password], input[type=email] {
 
 #titleInput {
   display: block;
-  float: left;
+  clear: both;
+}
+
+.marginBottom {
+  margin-bottom: 25px;
+}
+
+.marginTop {
+  margin-top: 25px;
 }
 
 #greeting {
-  font-size: 16pt;
-  display: inline-block;
   color: white;
 }
 
 #home {
-  margin-left: 10px;
-  font-size: 16pt;
-  text-decoration: none;
+  /*margin-left: 10px;*/
+  /*font-size: 16pt;*/
+  /*text-decoration: none;*/
   display: inline-block;
-  color: white;
+  /*color: white;*/
 }
 
 #logout {
-  margin-left: 10px;
-  font-size: 16pt;
-  text-decoration: none;
+  /*margin-left: 10px;*/
+  /*font-size: 16pt;*/
+  /*text-decoration: none;*/
   display: inline-block;
-  color: white;
+  /*color: white;*/
 }

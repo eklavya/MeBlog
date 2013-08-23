@@ -19,7 +19,7 @@ object BlogCtrl extends Controller with Auth {
 	val blogForm = Form (
 		tuple (
 			"title" -> nonEmptyText,
-			"content" -> nonEmptyText(maxLength = 10000)
+			"mgspost" -> nonEmptyText(maxLength = 10000)
 		)
 	)
 

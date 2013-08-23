@@ -5,24 +5,46 @@
 <html>
 	
 <head>
-	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"></link>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
 </head>
 
 <body>
 
-@header()
+@layout(None) {
+	<h1>Get Registered!!</h1>
+} {
+	<div id="registerDiv">		
+		
+		@form(action = routes.Application.register, 'method -> "POST", 'class -> "pure-form pure-form-aligned") {
+		<fieldset>
+		    <div class="pure-control-group">
+		        <label for="name">Username</label>
+		        <input id="name" type="text" placeholder="Username">
+		    </div>
 
-<div id="registerDiv">		
-	
-	@form(action = routes.Application.register, args = 'method -> "POST") {
-		<input id="name" type="text" name="name" placeholder="Username"/>
-		<input id="email" type="email" name="email" placeholder="Email"/>
-		<input id="pass" type="password" name="password" placeholder="Password"/>
-		<input id="rePass" type="password" name="rePassword" placeholder="Retype Password"/>
-		<input id="registerButton" type="submit" name="register" value="Register" />
-	}
+		    <div class="pure-control-group">
+		        <label for="password">Password</label>
+		        <input id="password" type="password" placeholder="Password">
+		    </div>
 
-</div>
+		    <div class="pure-control-group">
+		        <label for="email">Email Address</label>
+		        <input id="email" type="email" placeholder="Email Address">
+		    </div>
+		        <div class="pure-controls">
+		            <label for="cb" class="pure-checkbox">
+		                <input id="cb" type="checkbox"> I've read the terms and conditions
+		            </label>
+
+		            <button type="submit" class="pure-button">Register</button>
+		        </div>
+		    </fieldset>
+		}
+
+	</div>
+
+}
+
 
 </body>
 </html>
