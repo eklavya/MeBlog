@@ -1,0 +1,21 @@
+@(user: Option[String])(sideContent: Html)(content: Html)
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/pure-min.css")"/>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="pure-g-r">
+		<div class="pure-u" id="sidebar">
+			@sideBar(user)(sideContent)
+		</div>
+		<div class="pure-u content">
+			@content
+		</div>
+	</div>
+</body> 
+</html>

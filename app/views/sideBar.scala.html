@@ -1,0 +1,42 @@
+@(user: Option[String])(content: Html)
+@import views.html.helper._
+
+	@user.fold {
+		<a class="heading" href="/">MeBlog</a>
+		<div id="loginDiv">
+		@form(routes.Application.login, 'id -> "loginForm", 'class -> "pure-form") {
+			<fieldset>
+			<input type="text" id="username" name="username" placeholder="Username"/>
+			<input type="password" id="password" name="password" placeholder="Password"/>
+			<button id="loginButton" class="pure-button notice"type="submit">Login</button>
+			<a href="/register"><button id="registerButton" class="pure-button notice">Register</button></a>
+			</fieldset>
+		}
+		</div>
+		
+		<div id="searchDiv"
+		<form class="pure-form">
+		    <input type="text" id="searchInput" class="pure-input-rounded">
+		    <button type="submit" id="searchButton" class="pure-button notice">Search</button>
+		</form>
+		</div>
+
+		@content
+	} { user => 
+		<a class="heading" href="/">MeBlog</a>
+		<div id="loginDiv">
+		<p id="greeting">Hello @user!</p>
+		<a id="home" href="/home"><button class="pure-button notice">Home</button></a>
+		<a id="logout" href="/logout"><button class="pure-button">Logout</button></a>
+		</div>
+		<div id="searchDiv"
+		<form class="pure-form">
+		    <input type="text" id="searchInput" class="pure-input-rounded">
+		    <button type="submit" id="searchButton" class="pure-button">Search</button>
+		</form>
+		</div>
+		@content
+	}
+
+
+
